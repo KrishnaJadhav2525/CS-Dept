@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+FIX_SUMMARY.txt
+database.json
+.env
+.env.example
+test_endpoints.py
+verify_gridfs.py
