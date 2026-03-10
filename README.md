@@ -1,8 +1,15 @@
-    # CSD Website - Complete Flask Backend Added
+# Computer Science Department Portal
 
-This archive now contains a more complete Flask backend (app.py and db.py) implementing student signup/login, blog submission (approval workflow), contact form handling, admin panel endpoints (blogs, contacts, faculty, events, notifications, gallery, research), and local JSON database fallback.
+This repository contains the official web application for the Computer Science Department. **This portal is currently operational and actively used in production at Rajarshi Shahu Mahavidyalaya, Latur (Autonomous)**.
 
-Run locally:
+The application features a complete Flask backend with functionalities including:
+- Student signup and secure login
+- Blog submission and approval workflow
+- Contact form handling
+- Comprehensive Admin panel for managing blogs, contacts, faculty, events, notifications, gallery, and research
+- Local JSON database fallback
+
+## Run Locally
 
 ```bash
 python -m venv venv
@@ -13,7 +20,7 @@ cp .env.example .env
 python run.py
 ```
 
-Notes:
-- Email sending is not fully configured; configure MAIL_USERNAME and MAIL_PASSWORD and integrate Flask-Mail if you want real emails.
-- By default the app uses local database.json (created automatically).
-- update in home page hero image and sort notifications.
+## Notes
+- Email functionality requires configuration. Set `MAIL_USERNAME` and `MAIL_PASSWORD` in your `.env` file if real email functionality is required.
+- By default, the application uses a local `database.json` file as a database (created automatically if not present).
+- Upcoming features: Update in home page hero image and sort notifications.
