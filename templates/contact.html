@@ -1,0 +1,464 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact • Computer Science Department{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Contact Section */
+    .contact-section {
+        padding: 2rem 0;
+    }
+
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        max-width: 100%;
+    }
+
+    .contact-form,
+    .contact-info {
+        background: var(--card);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px var(--shadow);
+        border-top: 4px solid var(--secondary);
+    }
+
+    .contact-form h2,
+    .contact-info h3 {
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+        font-size: clamp(1.25rem, 3vw, 1.5rem);
+    }
+
+    /* Form Fields */
+    .form-field {
+        margin-bottom: 1.25rem;
+    }
+
+    .form-field label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        font-size: clamp(0.875rem, 2vw, 1rem);
+    }
+
+    .form-field input,
+    .form-field textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-size: clamp(0.875rem, 2vw, 1rem);
+        transition: border-color 0.3s;
+        box-sizing: border-box;
+    }
+
+    .form-field input:focus,
+    .form-field textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+    }
+
+    .form-field textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    /* Contact Info Items */
+    .contact-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .contact-item i {
+        font-size: clamp(1rem, 2.5vw, 1.25rem);
+        color: var(--text-light);
+        width: clamp(36px, 8vw, 40px);
+        height: clamp(36px, 8vw, 40px);
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--primary);
+        border-radius: 8px;
+    }
+
+    .contact-item div {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .contact-item div p {
+        margin: 0;
+        font-size: clamp(0.875rem, 2vw, 1rem);
+        line-height: 1.6;
+        word-wrap: break-word;
+    }
+
+    .contact-item div strong {
+        display: block;
+        margin-bottom: 0.25rem;
+        color: var(--primary);
+        font-size: clamp(0.9375rem, 2.2vw, 1.0625rem);
+    }
+
+    /* Map Embed */
+    .map-embed {
+        margin-top: 1.5rem;
+        border-radius: 8px;
+        overflow: hidden;
+        border: 2px solid var(--border);
+    }
+
+    .map-embed iframe {
+        border: none;
+        width: 100%;
+        height: 250px;
+    }
+
+    /* Success Message */
+    .success-message {
+        background: #d1fae5;
+        color: #065f46;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        display: none;
+        font-size: clamp(0.875rem, 2vw, 1rem);
+    }
+
+    .success-message.show {
+        display: block;
+    }
+
+    .success-message i {
+        margin-right: 0.5rem;
+    }
+
+    /* Button */
+    .btn.primary {
+        width: 100%;
+        padding: 0.875rem 1.5rem;
+        font-size: clamp(0.9375rem, 2.2vw, 1.0625rem);
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .btn.primary:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    /* Page Hero */
+    .page-hero {
+        padding: 2rem 0;
+    }
+
+    .page-hero h1 {
+        font-size: clamp(1.75rem, 5vw, 2.5rem);
+        margin-bottom: 0.5rem;
+    }
+
+    .page-hero p {
+        font-size: clamp(1rem, 2.5vw, 1.125rem);
+    }
+
+    /* Tablet Responsive (768px - 1024px) */
+    @media (max-width: 1024px) {
+        .contact-section {
+            padding: 2rem 0;
+        }
+
+        .contact-grid {
+            gap: 1.5rem;
+        }
+
+        .contact-form,
+        .contact-info {
+            padding: 1.5rem;
+        }
+
+        .map-embed iframe {
+            height: 220px;
+        }
+    }
+
+    /* Mobile Responsive (max-width: 768px) */
+    @media (max-width: 768px) {
+        .contact-section {
+            padding: 1.5rem 0;
+        }
+
+        .contact-grid {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .contact-form,
+        .contact-info {
+            padding: 1.5rem;
+        }
+
+        .contact-item {
+            gap: 0.875rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .map-embed iframe {
+            height: 200px;
+        }
+
+        .page-hero {
+            padding: 1.5rem 0;
+        }
+    }
+
+    /* Small Mobile (max-width: 480px) */
+    @media (max-width: 480px) {
+        .contact-section {
+            padding: 1rem 0;
+        }
+
+        .contact-grid {
+            gap: 1rem;
+        }
+
+        .contact-form,
+        .contact-info {
+            padding: 1.25rem;
+            border-radius: 8px;
+        }
+
+        .contact-form h2,
+        .contact-info h3 {
+            margin-bottom: 1rem;
+        }
+
+        .form-field {
+            margin-bottom: 1rem;
+        }
+
+        .form-field input,
+        .form-field textarea {
+            padding: 0.625rem;
+        }
+
+        .form-field textarea {
+            min-height: 100px;
+        }
+
+        .contact-item {
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .map-embed {
+            margin-top: 1rem;
+        }
+
+        .map-embed iframe {
+            height: 180px;
+        }
+
+        .btn.primary {
+            padding: 0.75rem 1.25rem;
+        }
+
+        .page-hero {
+            padding: 1rem 0;
+        }
+
+        .success-message {
+            padding: 0.875rem;
+        }
+    }
+
+    /* Extra Small Devices (max-width: 360px) */
+    @media (max-width: 360px) {
+        .contact-form,
+        .contact-info {
+            padding: 1rem;
+        }
+
+        .contact-item i {
+            width: 32px;
+            height: 32px;
+        }
+
+        .map-embed iframe {
+            height: 160px;
+        }
+    }
+
+    /* Landscape Mode for Mobile */
+    @media (max-width: 768px) and (orientation: landscape) {
+        .page-hero {
+            padding: 1rem 0;
+        }
+
+        .contact-section {
+            padding: 1.5rem 0;
+        }
+
+        .map-embed iframe {
+            height: 180px;
+        }
+    }
+
+    /* Print Styles */
+    @media print {
+        .contact-form form,
+        .btn {
+            display: none;
+        }
+
+        .contact-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .map-embed {
+            display: none;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <h1>Contact Us</h1>
+        <p>Have a question? Reach out to the department office.</p>
+    </div>
+</section>
+
+<section class="contact-section container">
+    <div class="contact-grid">
+        <div class="contact-form">
+            <h2>Send us a Message</h2>
+            <div class="success-message" id="successMsg">
+                <i class="fa-solid fa-check-circle"></i> Your message has been sent successfully! We'll get back to you
+                soon.
+            </div>
+
+            <form id="contactForm" onsubmit="submitContact(event)">
+                <div class="form-field">
+                    <label>Your Name *</label>
+                    <input type="text" id="cName" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-field">
+                    <label>Email Address *</label>
+                    <input type="email" id="cEmail" placeholder="your.email@example.com" required>
+                </div>
+                <div class="form-field">
+                    <label>Subject *</label>
+                    <input type="text" id="cSubject" placeholder="What is this regarding?" required>
+                </div>
+                <div class="form-field">
+                    <label>Message *</label>
+                    <textarea id="cMessage" rows="6" placeholder="Write your message here..." required></textarea>
+                </div>
+                <button type="submit" class="btn primary" id="submitBtn" aria-label="Send your message">
+                    <i class="fa-solid fa-paper-plane"></i> Send Message
+                </button>
+            </form>
+        </div>
+
+        <div class="contact-info">
+            <h3>Department Office</h3>
+
+            <div class="contact-item">
+                <i class="fa-solid fa-location-dot"></i>
+                <div>
+                    <strong>Address</strong>
+                    <p>Department of Computer Science<br>Rajarshi Shahu College, Latur<br>Maharashtra, India</p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <i class="fa-solid fa-envelope"></i>
+                <div>
+                    <strong>Email</strong>
+                    <p>csdepartmentrsml@gmail.com<br>principal@shahucollegelatur.org.in</p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <i class="fa-solid fa-phone"></i>
+                <div>
+                    <strong>Phone</strong>
+                    <p>+91-00000-00000</p>
+                </div>
+            </div>
+
+            <div class="contact-item">
+                <i class="fa-solid fa-clock"></i>
+                <div>
+                    <strong>Office Hours</strong>
+                    <p>Monday - Saturday: 9:00 AM - 5:00 PM<br>Sunday: Closed</p>
+                </div>
+            </div>
+
+            <div class="map-embed">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3812.086394853537!2d76.5802775!3d18.3979222!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcf8396336609e5%3A0xe06922ffa998a978!2sRajarshi%20Shahu%20College%2C%20Latur!5e0!3m2!1sen!2sin!4v1691847634593!5m2!1sen!2sin"
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    function submitContact(e) {
+        e.preventDefault();
+
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+
+        const data = {
+            name: document.getElementById('cName').value.trim(),
+            email: document.getElementById('cEmail').value.trim(),
+            subject: document.getElementById('cSubject').value.trim(),
+            message: document.getElementById('cMessage').value.trim()
+        };
+
+        fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+            .then(res => res.json())
+            .then(result => {
+                if (result.success) {
+                    document.getElementById('successMsg').classList.add('show');
+                    document.getElementById('contactForm').reset();
+                    setTimeout(() => {
+                        document.getElementById('successMsg').classList.remove('show');
+                    }, 5000);
+                } else {
+                    alert(result.message || 'Failed to send message. Please try again.');
+                }
+            })
+            .catch(err => {
+                alert('Error sending message: ' + err.message);
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Message';
+            });
+    }
+</script>
+{% endblock %}

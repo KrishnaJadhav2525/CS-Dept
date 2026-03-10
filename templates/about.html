@@ -1,0 +1,709 @@
+{% extends 'base.html' %} {% block title %}About • Computer Science Department{%
+endblock %} {% block extra_css %}
+<style>
+  /* Removed different hero color - now uses unified theme from base */
+  .about-hero {
+    padding-bottom: 2rem;
+  }
+
+  .about-hero p {
+    color: var(--text-light);
+    max-width: 900px;
+    margin: 0 auto 0.75rem;
+    line-height: 1.7;
+    text-align: left;
+    font-size: 0.95rem;
+  }
+
+  .about-hero hr {
+    margin: 0.5rem 0;
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .about-hero br {
+    display: block;
+    content: "";
+    margin: 0.25rem 0;
+  }
+
+  .about-section {
+    padding: 2.5rem 0;
+  }
+
+  .vision-mission {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+
+  .vision-card,
+  .mission-card {
+    background: var(--card);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px var(--shadow);
+    border-top: 4px solid var(--secondary);
+  }
+
+  .vision-card h2,
+  .mission-card h2 {
+    color: var(--primary);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .vision-card h2 i,
+  .mission-card h2 i {
+    color: var(--secondary);
+    font-size: 1.25rem;
+    flex-shrink: 0;
+  }
+
+  .vision-card p,
+  .mission-card li {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .mission-card ul {
+    padding-left: 1.5rem;
+    margin: 0;
+  }
+
+  .mission-card li {
+    margin-bottom: 0.75rem;
+  }
+
+  .mission-card li:last-child {
+    margin-bottom: 0;
+  }
+
+  .faculty-section {
+    padding: 3rem 0;
+  }
+
+  .faculty-section h2 {
+    color: var(--primary);
+    margin-bottom: 2rem;
+    font-size: 2rem;
+  }
+
+  .faculty-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--shadow);
+    background: white;
+  }
+
+  .faculty-table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+  }
+
+  .faculty-table-container th,
+  .faculty-table-container td {
+    border: 1px solid var(--border);
+    padding: 0.85rem 0.6rem;
+    text-align: left;
+    font-size: 0.9rem;
+    vertical-align: middle;
+  }
+
+  .faculty-table-container th {
+    background: var(--primary);
+    color: var(--text-light);
+    font-weight: 600;
+    white-space: nowrap;
+    font-size: 0.95rem;
+  }
+
+  .faculty-table-container td {
+    word-wrap: break-word;
+  }
+
+  .faculty-photo {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--primary);
+    margin: 0 auto;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.75rem;
+    background: var(--primary);
+    color: var(--text-light);
+    border-radius: 5px;
+    font-size: 0.8rem;
+    transition: background 0.2s;
+    white-space: nowrap;
+    text-decoration: none;
+    border: none;
+  }
+
+  .download-btn i {
+    font-size: 0.75rem;
+  }
+
+  .download-btn:hover {
+    background: var(--secondary);
+    color: var(--primary-dark);
+  }
+
+  .infra-section {
+    padding-bottom: 3rem;
+  }
+
+  .infra-section h2 {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+  }
+
+  .infra-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .infra-tile {
+    height: 180px;
+    border-radius: 8px;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 8px var(--shadow);
+  }
+
+  .infra-tile:hover {
+    transform: scale(1.05);
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  /* Tablet - 1024px and below */
+  @media (max-width: 1024px) {
+    .about-hero p {
+      font-size: 0.95rem;
+    }
+
+    .faculty-table-container th,
+    .faculty-table-container td {
+      padding: 0.85rem;
+      font-size: 0.9rem;
+    }
+
+    .faculty-photo {
+      width: 65px;
+      height: 65px;
+    }
+
+    .infra-grid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .infra-tile {
+      height: 170px;
+    }
+  }
+
+  /* Mobile landscape and small tablets - 768px and below */
+  @media (max-width: 768px) {
+    .about-hero {
+      padding-bottom: 1.5rem;
+    }
+
+    .about-hero p {
+      text-align: left;
+      padding: 0;
+      font-size: 0.85rem;
+      line-height: 1.65;
+      margin-bottom: 0.5rem;
+    }
+
+    .about-hero br {
+      margin: 0.2rem 0;
+    }
+
+    .about-section {
+      padding: 2rem 0;
+    }
+
+    .vision-mission {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .vision-card,
+    .mission-card {
+      padding: 1.5rem;
+    }
+
+    .vision-card h2,
+    .mission-card h2 {
+      font-size: 1.35rem;
+    }
+
+    .vision-card h2 i,
+    .mission-card h2 i {
+      font-size: 1.15rem;
+    }
+
+    .vision-card p,
+    .mission-card li {
+      font-size: 0.95rem;
+    }
+
+    .faculty-section,
+    .infra-section {
+      padding: 2.5rem 0;
+    }
+
+    .faculty-section h2,
+    .infra-section h2 {
+      font-size: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .faculty-table-container {
+      margin: 0 -1rem;
+      border-radius: 0;
+    }
+
+    .faculty-table-container table {
+      min-width: 520px;
+    }
+
+    .faculty-table-container th,
+    .faculty-table-container td {
+      padding: 0.65rem 0.45rem;
+      font-size: 0.82rem;
+    }
+
+    .faculty-table-container th {
+      font-size: 0.87rem;
+    }
+
+    .faculty-photo {
+      width: 55px;
+      height: 55px;
+    }
+
+    .download-btn {
+      padding: 0.38rem 0.65rem;
+      font-size: 0.75rem;
+      gap: 0.3rem;
+    }
+
+    .download-btn i {
+      font-size: 0.72rem;
+    }
+
+    .infra-grid {
+      grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+      gap: 1rem;
+    }
+
+    .infra-tile {
+      height: 150px;
+    }
+  }
+
+  /* Mobile portrait - 480px and below */
+  @media (max-width: 480px) {
+    .about-hero {
+      padding-bottom: 1.25rem;
+    }
+
+    .about-hero p {
+      font-size: 0.8rem;
+      line-height: 1.6;
+      margin-bottom: 0.4rem;
+    }
+
+    .about-section {
+      padding: 1.5rem 0;
+    }
+
+    .vision-mission {
+      gap: 1.25rem;
+    }
+
+    .vision-card,
+    .mission-card {
+      padding: 1.25rem;
+    }
+
+    .vision-card h2,
+    .mission-card h2 {
+      font-size: 1.2rem;
+      gap: 0.4rem;
+    }
+
+    .vision-card h2 i,
+    .mission-card h2 i {
+      font-size: 1.05rem;
+    }
+
+    .vision-card p,
+    .mission-card li {
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .mission-card ul {
+      padding-left: 1.25rem;
+    }
+
+    .faculty-section,
+    .infra-section {
+      padding: 2rem 0;
+    }
+
+    .faculty-section h2,
+    .infra-section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .faculty-table-container table {
+      min-width: 460px;
+    }
+
+    .faculty-table-container th,
+    .faculty-table-container td {
+      padding: 0.6rem 0.35rem;
+      font-size: 0.77rem;
+    }
+
+    .faculty-table-container th {
+      font-size: 0.82rem;
+      padding: 0.65rem 0.35rem;
+    }
+
+    .faculty-photo {
+      width: 50px;
+      height: 50px;
+    }
+
+    .download-btn {
+      padding: 0.35rem 0.6rem;
+      font-size: 0.72rem;
+      gap: 0.28rem;
+    }
+
+    .download-btn i {
+      font-size: 0.7rem;
+    }
+
+    .infra-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.9rem;
+    }
+
+    .infra-tile {
+      height: 140px;
+    }
+  }
+
+  /* Small mobile - 360px and below */
+  @media (max-width: 360px) {
+    .about-hero p {
+      font-size: 0.75rem;
+      line-height: 1.55;
+    }
+
+    .vision-card,
+    .mission-card {
+      padding: 1rem;
+    }
+
+    .vision-card h2,
+    .mission-card h2 {
+      font-size: 1.1rem;
+      gap: 0.35rem;
+    }
+
+    .vision-card h2 i,
+    .mission-card h2 i {
+      font-size: 0.95rem;
+    }
+
+    .vision-card p,
+    .mission-card li {
+      font-size: 0.85rem;
+    }
+
+    .faculty-section h2,
+    .infra-section h2 {
+      font-size: 1.35rem;
+    }
+
+    .faculty-table-container table {
+      min-width: 420px;
+    }
+
+    .faculty-table-container th,
+    .faculty-table-container td {
+      padding: 0.5rem 0.3rem;
+      font-size: 0.72rem;
+    }
+
+    .faculty-table-container th {
+      font-size: 0.77rem;
+      padding: 0.55rem 0.3rem;
+    }
+
+    .faculty-photo {
+      width: 46px;
+      height: 46px;
+    }
+
+    .download-btn {
+      padding: 0.32rem 0.55rem;
+      font-size: 0.68rem;
+      gap: 0.25rem;
+    }
+
+    .download-btn i {
+      font-size: 0.66rem;
+    }
+
+    .infra-tile {
+      height: 120px;
+    }
+  }
+
+  /* Extra small devices - 320px and below */
+  @media (max-width: 320px) {
+    .about-hero p {
+      font-size: 0.75rem;
+    }
+
+    .vision-card h2,
+    .mission-card h2 {
+      font-size: 1rem;
+    }
+
+    .vision-card h2 i,
+    .mission-card h2 i {
+      font-size: 0.9rem;
+    }
+
+    .vision-card p,
+    .mission-card li {
+      font-size: 0.8rem;
+    }
+
+    .faculty-section h2,
+    .infra-section h2 {
+      font-size: 1.25rem;
+    }
+
+    .faculty-table-container table {
+      min-width: 380px;
+    }
+
+    .faculty-table-container th,
+    .faculty-table-container td {
+      padding: 0.45rem 0.28rem;
+      font-size: 0.68rem;
+    }
+
+    .faculty-table-container th {
+      font-size: 0.73rem;
+      padding: 0.5rem 0.28rem;
+    }
+
+    .faculty-photo {
+      width: 42px;
+      height: 42px;
+      border-width: 1.5px;
+    }
+
+    .download-btn {
+      padding: 0.28rem 0.48rem;
+      font-size: 0.64rem;
+      gap: 0.22rem;
+    }
+
+    .download-btn i {
+      font-size: 0.62rem;
+    }
+
+    .infra-tile {
+      height: 110px;
+    }
+  }
+
+  /* Ultra small - below 300px */
+  @media (max-width: 300px) {
+    .faculty-table-container table {
+      min-width: 360px;
+    }
+
+    .faculty-table-container th,
+    .faculty-table-container td {
+      padding: 0.4rem 0.25rem;
+      font-size: 0.64rem;
+    }
+
+    .faculty-table-container th {
+      font-size: 0.68rem;
+      padding: 0.45rem 0.25rem;
+    }
+
+    .faculty-photo {
+      width: 38px;
+      height: 38px;
+    }
+
+    .download-btn {
+      padding: 0.25rem 0.42rem;
+      font-size: 0.6rem;
+    }
+
+    .download-btn i {
+      display: none;
+    }
+
+    .infra-tile {
+      height: 100px;
+    }
+  }
+</style>
+{% endblock %} {% block content %}
+<section class="page-hero about-hero">
+  <div class="container">
+    <h1>About the Department</h1>
+    <p>
+      The Department of Computer Science was established in the year 1999 with
+      one optional subject computer science for B. Sc. Programme. The need of
+      this department was for awareness of education in computer science in the
+      rural area. Currently following academic programmes are being offered:<br>
+      <br>
+      1. B.Sc. (Computer Science) as a Major <br>2. M.Sc. (Computer Science) <br>3. B.Voc. (Computer Technology) <br>4.
+      B.Sc. Data Science
+      <br>
+      <br>
+      <hr>
+    </p>
+    <br>
+    <p>
+      Some of the significant features of the department are as follows:<br>
+      1. Qualified and Experienced Staff<br>
+      2. Well Equipped Laboratories with Internet Facility<br>
+      3. E-Learning Facility<br>
+      4. Industry Partnership for Projects and Internship<br>
+    </p>
+    <br>
+    <hr>
+    <br>
+    <p>
+      From the year 2017-18 Choice Based Credit System (CBCS) pattern has been implemented at B. Sc. Programme. Webpage
+      Designing and Introduction to SCILAB courses are introduced as Skill Enhancement Courses. In M. Sc. curriculum
+      department has included ASP.Net, PHP, Python Programming, IoT, Big Data Analysis and Soft Computing Courses as
+      recent industry requirements. B. Voc. curriculum has been designed as per NSQF standards including the job roles
+      web developer, Trainer for Junior Software Developer and Software Developer levels 5, 6 and 7 respectively.
+    </p>
+  </div>
+</section>
+
+<section class="about-section container">
+  <div class="vision-mission">
+    <div class="vision-card">
+      <h2><i class="fa-solid fa-eye"></i> Vision</h2>
+      <p>
+        To be a center of excellence in computing education and research,
+        producing skilled professionals who contribute to technological
+        advancement and societal development.
+      </p>
+    </div>
+    <div class="mission-card">
+      <h2><i class="fa-solid fa-bullseye"></i> Mission</h2>
+      <ul>
+        <li>
+          Deliver high-quality education and hands-on learning experiences
+        </li>
+        <li>Encourage innovation, ethics, and leadership among students</li>
+        <li>
+          Collaborate with industry and research labs for practical exposure
+        </li>
+        <li>
+          Foster research in emerging technologies like AI, IoT, and Data
+          Science
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="faculty-section container">
+  <h2>Meet Our Faculty</h2>
+  <div class="faculty-table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Photo</th>
+          <th>Name</th>
+          <th>Position</th>
+          <th>Qualification</th>
+          <th>Resume</th>
+        </tr>
+      </thead>
+      <tbody id="facultyTableBody">
+        {% if faculty %} {% for f in faculty %}
+        <tr>
+          <td>
+            <img src="{{ f.photo or '/placeholder.svg?height=80&width=80' }}" alt="{{ f.name }}" class="faculty-photo"
+              onerror="this.src='/placeholder.svg?height=80&width=80'" />
+          </td>
+          <td>{{ f.name }}</td>
+          <td>{{ f.role }}</td>
+          <td>{{ f.qualification or '-' }}</td>
+          <td>
+            {% if f.resume %}
+            <a href="{{ f.resume }}" target="_blank" class="download-btn">
+              <i class="fa-solid fa-download"></i> Download
+            </a>
+            {% else %} - {% endif %}
+          </td>
+        </tr>
+        {% endfor %} {% else %}
+        <tr>
+          <td colspan="5" class="text-center">No faculty data available</td>
+        </tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="container infra-section mb-3">
+  <h2>Infrastructure</h2>
+  <div class="infra-grid" id="infraGrid">
+    {% if infra %} {% for item in infra %}
+    {% set bg_img = item.image or '/placeholder.svg?height=180&width=250' %}
+    <div class="infra-tile" style="background-image: url('{{ bg_img }}');"></div>
+    {% endfor %} {% else %} ... {% endif %}
+  </div>
+</section>
+{% endblock %}
